@@ -1,0 +1,9 @@
+.settings/
+logs/
+*.logs
+.classpath
+.project
+pom.xml
+target/
+*.xml
+src/main/resources/
