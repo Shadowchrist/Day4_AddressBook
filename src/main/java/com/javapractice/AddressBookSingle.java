@@ -2,10 +2,15 @@ package com.javapractice;
 import java.util.*;
 
 public class AddressBookSingle {
-	
-	static HashMap<String,AddressBookMain> addressbook= new HashMap<>();
-	
-	private static void addDetails()
+		
+	public String name;
+	public HashMap<String, AddressBookMain> addressbook;
+	public AddressBookSingle(String bookName, HashMap<String, AddressBookMain> book) 
+	{
+		this.name=bookName;
+		this.addressbook=book;
+	}
+	public static void addDetails(AddressBookSingle book)
 	{
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
@@ -13,6 +18,7 @@ public class AddressBookSingle {
 		System.out.println("Enter last name:");
 		String lastName=sc.nextLine();
 		String index=firstName+" "+lastName;
+		index=index.toUpperCase();
 		System.out.println("Enter address:");
 		String address=sc.nextLine();
 		System.out.println("Enter city:");
@@ -25,13 +31,13 @@ public class AddressBookSingle {
 		String phoneNumber=sc.nextLine();
 		System.out.println("Enter email ID:");
 		String email=sc.nextLine();
-		addressbook.put(index,new AddressBookMain(firstName,lastName,address,city,
+		book.addressbook.put(index,new AddressBookMain(firstName,lastName,address,city,
 						   state,zip,phoneNumber,email));
 		System.out.println("New contact added.");
-		addressbook.get(index).Display();
+		book.addressbook.get(index).Display();
 	}
 	
-	private static void editDetails()
+	public static void editDetails(AddressBookSingle book)
 	{
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter existing first name:");
@@ -39,13 +45,15 @@ public class AddressBookSingle {
 		System.out.println("Enter existing last name:");
 		String lastName=sc.nextLine();
 		String index=firstName+" "+lastName;
-		if(!addressbook.isEmpty()&&addressbook.containsKey(index))
+		index=index.toUpperCase();
+		if(!book.addressbook.isEmpty()&&book.addressbook.containsKey(index))
 		{
 			System.out.println("Enter new first name:");
 			String newfirstName=sc.nextLine();
 			System.out.println("Enter new last name:");
 			String newlastName=sc.nextLine();
 			String newindex=newfirstName+" "+newlastName;
+			newindex=newindex.toUpperCase();
 			System.out.println("Enter new address:");
 			String newaddress=sc.nextLine();
 			System.out.println("Enter new city:");
@@ -58,17 +66,17 @@ public class AddressBookSingle {
 			String newphoneNumber=sc.nextLine();
 			System.out.println("Enter new email ID:");
 			String newemail=sc.nextLine();
-			addressbook.put(newindex,new AddressBookMain(newfirstName,newlastName,newaddress,newcity,
+			book.addressbook.put(newindex,new AddressBookMain(newfirstName,newlastName,newaddress,newcity,
 							   newstate,newzip,newphoneNumber,newemail));
-			addressbook.remove(index);
+			book.addressbook.remove(index);
 			System.out.println(" Updated Contact details: ");
-			addressbook.get(newindex).Display();
+			book.addressbook.get(newindex).Display();
 		}	
 		else
 			System.out.println("Contact does not exist!!!");
 	}
 	
-	private static void removeDetails()
+	public static void removeDetails(AddressBookSingle book)
 	{
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
@@ -76,16 +84,17 @@ public class AddressBookSingle {
 		System.out.println("Enter last name:");
 		String lastName=sc.nextLine();
 		String index=firstName+" "+lastName;
-		if(!addressbook.isEmpty()&&addressbook.containsKey(index))
+		index=index.toUpperCase();
+		if(!book.addressbook.isEmpty()&&book.addressbook.containsKey(index))
 		{
-			addressbook.remove(index);
+			book.addressbook.remove(index);
 			System.out.println("Contact removed.");
 		}
 		else
 			System.out.println("Contact does not exist!!!");
 	}
 	
-	private static void displayDetails()
+	public static void displayDetails(AddressBookSingle book)
 	{
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
@@ -93,25 +102,28 @@ public class AddressBookSingle {
 		System.out.println("Enter last name:");
 		String lastName=sc.nextLine();
 		String index=firstName+" "+lastName;
-		if(!addressbook.isEmpty()&&addressbook.containsKey(index))
+		index=index.toUpperCase();
+		if(!book.addressbook.isEmpty()&&book.addressbook.containsKey(index))
 		{
-			addressbook.get(index).Display();
+			book.addressbook.get(index).Display();
 		}
 		else
 			System.out.println("Contact does not exist!!!"); 
 	}
 	
-	public static void main(String args[])
+	public static void bookOperations(AddressBookSingle book)
 	{
 		while(true)
 		{
+			System.out.println("Active Book: "+book.name);
+			
 			Scanner sc=new Scanner(System.in);
 			
 			System.out.println("Enter 1 to add a contact detail.");
 			System.out.println("Enter 2 to edit a contact detail.");
 			System.out.println("Enter 3 to remove a contact detail.");
 			System.out.println("Enter 4 to display a contact detail.");
-			System.out.println("Enter 5 to exit.");
+			System.out.println("Enter 5 to return.");
 			System.out.println("Enter your choice:");
 			
 			int ch=sc.nextInt();
@@ -119,20 +131,19 @@ public class AddressBookSingle {
 			switch(ch)
 			{
 				case 1:
-					addDetails();
+					addDetails(book);
 					break;
 				case 2:
-					editDetails();
+					editDetails(book);
 					break;
 				case 3:					
-					removeDetails();
+					removeDetails(book);
 					break;
 				case 4:
-					displayDetails();
+					displayDetails(book);
 					break;
 				default:
-					System.out.println("Exiting...");
-					System.exit(0);
+					return;
 			}
 		}
 	}
