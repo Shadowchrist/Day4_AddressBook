@@ -12,6 +12,7 @@ public class AddressBookSingle {
 	}
 	public static void addDetails(AddressBookSingle book)
 	{
+		@SuppressWarnings("resource")
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
 		String firstName=sc.nextLine();
@@ -19,26 +20,32 @@ public class AddressBookSingle {
 		String lastName=sc.nextLine();
 		String index=firstName+" "+lastName;
 		index=index.toUpperCase();
-		System.out.println("Enter address:");
-		String address=sc.nextLine();
-		System.out.println("Enter city:");
-		String city=sc.nextLine();
-		System.out.println("Enter state:");
-		String state=sc.nextLine();
-		System.out.println("Enter zipcode:");
-		String zip=sc.nextLine();
-		System.out.println("Enter Phone Number:");
-		String phoneNumber=sc.nextLine();
-		System.out.println("Enter email ID:");
-		String email=sc.nextLine();
-		book.addressbook.put(index,new AddressBookMain(firstName,lastName,address,city,
-						   state,zip,phoneNumber,email));
-		System.out.println("New contact added.");
-		book.addressbook.get(index).Display();
+		if(!book.addressbook.containsKey(index))
+		{
+			System.out.println("Enter address:");
+			String address=sc.nextLine();
+			System.out.println("Enter city:");
+			String city=sc.nextLine();
+			System.out.println("Enter state:");
+			String state=sc.nextLine();
+			System.out.println("Enter zipcode:");
+			String zip=sc.nextLine();
+			System.out.println("Enter Phone Number:");
+			String phoneNumber=sc.nextLine();
+			System.out.println("Enter email ID:");
+			String email=sc.nextLine();
+			book.addressbook.put(index,new AddressBookMain(firstName,lastName,address,city,
+							   state,zip,phoneNumber,email));
+			System.out.println("New contact added.");
+			book.addressbook.get(index).Display();
+		}
+		else
+			System.out.println("Contact already exists!!!");
 	}
 	
 	public static void editDetails(AddressBookSingle book)
 	{
+		@SuppressWarnings("resource")
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter existing first name:");
 		String firstName=sc.nextLine();
@@ -48,29 +55,62 @@ public class AddressBookSingle {
 		index=index.toUpperCase();
 		if(!book.addressbook.isEmpty()&&book.addressbook.containsKey(index))
 		{
-			System.out.println("Enter new first name:");
-			String newfirstName=sc.nextLine();
-			System.out.println("Enter new last name:");
-			String newlastName=sc.nextLine();
-			String newindex=newfirstName+" "+newlastName;
-			newindex=newindex.toUpperCase();
-			System.out.println("Enter new address:");
-			String newaddress=sc.nextLine();
-			System.out.println("Enter new city:");
-			String newcity=sc.nextLine();
-			System.out.println("Enter new state:");
-			String newstate=sc.nextLine();
-			System.out.println("Enter new zipcode:");
-			String newzip=sc.nextLine();
-			System.out.println("Enter new Phone Number:");
-			String newphoneNumber=sc.nextLine();
-			System.out.println("Enter new email ID:");
-			String newemail=sc.nextLine();
-			book.addressbook.put(newindex,new AddressBookMain(newfirstName,newlastName,newaddress,newcity,
-							   newstate,newzip,newphoneNumber,newemail));
-			book.addressbook.remove(index);
+			int flag=0;
+			while(flag==0)
+			{
+				System.out.println("What do you want to edit? \n"
+						+ "1. Address \n"
+						+ "2. City \n"
+						+ "3. State \n"
+						+ "4. Zipcode \n"
+						+ "5. Phone Number \n"
+						+ "6. Email ID \n"
+						+ "7. Password \n"
+						+ "8. Editing finished.");
+				System.out.println("Enter your choice: \n");
+				int ch=sc.nextInt();
+				switch(ch)
+				{
+					case 1:
+						System.out.println("Enter a new address: \n");
+						String newaddress=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).address=newaddress;
+						break;
+					case 2:
+						System.out.println("Enter a new city: \n");
+						String newcity=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).city=newcity;
+						break;
+					case 3:
+						System.out.println("Enter a new state: \n");
+						String newstate=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).state=newstate;
+						break;
+					case 4:
+						System.out.println("Enter a new zip code: \n");
+						String newzip=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).zip=newzip;
+						break;
+					case 5:
+						System.out.println("Enter a new phone number: \n");
+						String newnumber=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).phoneNumber=newnumber;
+						break;
+					case 6:
+						System.out.println("Enter a new email ID: \n");
+						String newemail=new Scanner(System.in).nextLine();
+						book.addressbook.get(index).email=newemail;
+						break;
+					case 7:
+						System.out.println("Changes saved.");
+						flag=1;
+						break;
+					default:
+						System.out.println("Invalid choice!!!");
+				}
+			}
 			System.out.println(" Updated Contact details: ");
-			book.addressbook.get(newindex).Display();
+			book.addressbook.get(index).Display();
 		}	
 		else
 			System.out.println("Contact does not exist!!!");
@@ -78,6 +118,7 @@ public class AddressBookSingle {
 	
 	public static void removeDetails(AddressBookSingle book)
 	{
+		@SuppressWarnings("resource")
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
 		String firstName=sc.nextLine();
@@ -96,6 +137,7 @@ public class AddressBookSingle {
 	
 	public static void displayDetails(AddressBookSingle book)
 	{
+		@SuppressWarnings("resource")
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter first name:");
 		String firstName=sc.nextLine();
@@ -117,6 +159,7 @@ public class AddressBookSingle {
 		{
 			System.out.println("Active Book: "+book.name);
 			
+			@SuppressWarnings("resource")
 			Scanner sc=new Scanner(System.in);
 			
 			System.out.println("Enter 1 to add a contact detail.");

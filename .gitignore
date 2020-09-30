@@ -7,3 +7,4 @@ pom.xml
 target/
 *.xml
 src/main/resources/
+/bin/
