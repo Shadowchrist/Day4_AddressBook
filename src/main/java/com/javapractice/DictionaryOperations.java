@@ -3,131 +3,106 @@ package com.javapractice;
 import java.util.*;
 
 public class DictionaryOperations<search> {
-	
-	public static boolean checkAddressBook(String bookName)
-	{
-		if(AddressBookDictionary.dictionary.containsKey(bookName))
+
+	public static boolean checkAddressBook(String bookName) {
+		if (AddressBookDictionary.dictionary.containsKey(bookName))
 			return true;
 		else
 			return false;
 	}
-	
-	public static void displayAddressBooks()
-	{
-		ArrayList<String> existingbooks=new ArrayList<>();
-		for(String books: AddressBookDictionary.dictionary.keySet())
+
+	public static void displayAddressBooks() {
+		ArrayList<String> existingbooks = new ArrayList<>();
+		for (String books : AddressBookDictionary.dictionary.keySet())
 			existingbooks.add(books);
 		Collections.sort(existingbooks);
-		int i=1;
-		for (String books: existingbooks)
+		int i = 1;
+		for (String books : existingbooks)
 			System.out.println(i++ + ": " + books);
 	}
-	
-	public static ArrayList<AddressBookMain> searchByCriteria(char choice,String parameter)
-	{
-		ArrayList<AddressBookMain> local=new ArrayList<>();
-		for(AddressBookSingle itr: AddressBookDictionary.dictionary.values())
-			{
-				if(choice=='1')
-				{
-					for(AddressBookMain criteria: itr.addressbook.values())
-					{
-						if(criteria.city.equalsIgnoreCase(parameter))
-							local.add(criteria);
-					}	
+
+	public static ArrayList<AddressBookMain> searchByCriteria(char choice, String parameter) {
+		ArrayList<AddressBookMain> local = new ArrayList<>();
+		for (AddressBookSingle itr : AddressBookDictionary.dictionary.values()) {
+			if (choice == '1') {
+				for (AddressBookMain criteria : itr.addressbook.values()) {
+					if (criteria.city.equalsIgnoreCase(parameter))
+						local.add(criteria);
 				}
-				else if(choice=='2')
-				{
-					for(AddressBookMain criteria: itr.addressbook.values())
-					{
-						if(criteria.state.equalsIgnoreCase(parameter))
-							local.add(criteria);
-					}	
+			} else if (choice == '2') {
+				for (AddressBookMain criteria : itr.addressbook.values()) {
+					if (criteria.state.equalsIgnoreCase(parameter))
+						local.add(criteria);
 				}
-				else
-				{
-					for(AddressBookMain criteria: itr.addressbook.values())
-					{
-						if(criteria.state.equalsIgnoreCase(parameter))
-							local.add(criteria);
-					}	
-				}	
+			} else {
+				for (AddressBookMain criteria : itr.addressbook.values()) {
+					if (criteria.state.equalsIgnoreCase(parameter))
+						local.add(criteria);
+				}
 			}
-		return local;
 		}
-	
-	public static void diplayCriteriaDetails(ArrayList<AddressBookMain> search)
-	{
-		Collections.sort(search,AddressBookMain.nameComparator);
-		for(AddressBookMain itr: search)
-		{	
+		return local;
+	}
+
+	public static void diplayCriteriaDetails(ArrayList<AddressBookMain> search) {
+		Collections.sort(search, AddressBookMain.nameComparator);
+		for (AddressBookMain itr : search) {
 			itr.Display();
 			System.out.println("\n");
-		}	
+		}
 	}
-	
-	public static void createAddressBook()
-	{
+
+	public static void createAddressBook() {
 		System.out.println("Enter name of Address Book to be created: ");
 		@SuppressWarnings("resource")
 		String bookName = new Scanner(System.in).nextLine();
-		bookName=bookName.toUpperCase();
-		if(!checkAddressBook(bookName))
-		{
-			HashMap<String,AddressBookMain> book=new HashMap<>();
-			AddressBookDictionary.dictionary.put(bookName,new AddressBookSingle(bookName,book));
+		bookName = bookName.toUpperCase();
+		if (!checkAddressBook(bookName)) {
+			HashMap<String, AddressBookMain> book = new HashMap<>();
+			AddressBookDictionary.dictionary.put(bookName, new AddressBookSingle(bookName, book));
 			System.out.println("Address Book Created");
-		}
-		else
+		} else
 			System.out.println("Address Book with that name already present!!!");
 	}
-	
-	public static void selectAddressBook()
-	{
+
+	public static void selectAddressBook() {
 		System.out.println("Address Books present: \n");
 		displayAddressBooks();
 		System.out.println("Enter name of Address Book to be selected: ");
 		@SuppressWarnings("resource")
-		Scanner ob=new Scanner(System.in);
+		Scanner ob = new Scanner(System.in);
 		String current = ob.nextLine();
-		current=current.toUpperCase();
-		if(AddressBookDictionary.dictionary.containsKey(current))
-		{
+		current = current.toUpperCase();
+		if (AddressBookDictionary.dictionary.containsKey(current)) {
 			AddressBookSingle activeBook = AddressBookDictionary.dictionary.get(current);
 			AddressBookSingle.bookOperations(activeBook);
-		}
-		else
-		{
+		} else {
 			System.out.println("No such directory exists! Do you want to create one? (Yes/No) \n");
-			String choice=ob.nextLine();
-			choice=choice.toUpperCase();
-			switch(choice)
-			{
-				case "YES": 
-					createAddressBook();
-					break;
-				case "NO":
-					System.out.println("Returning...");
-					break;
-				default:
-					System.out.println("Wrong Choice!!!");
+			String choice = ob.nextLine();
+			choice = choice.toUpperCase();
+			switch (choice) {
+			case "YES":
+				createAddressBook();
+				break;
+			case "NO":
+				System.out.println("Returning...");
+				break;
+			default:
+				System.out.println("Wrong Choice!!!");
 			}
-		}	
+		}
 	}
-	
-	public static void removeAddressBook()
-	{
+
+	public static void removeAddressBook() {
 		System.out.println("Enter name of Address Book to be removed: ");
 		@SuppressWarnings("resource")
-		Scanner ob=new Scanner(System.in);
-		String rem=ob.nextLine();
-		rem=rem.toUpperCase();
-		if(AddressBookDictionary.dictionary.containsKey(rem))
-		{
+		Scanner ob = new Scanner(System.in);
+		String rem = ob.nextLine();
+		rem = rem.toUpperCase();
+		if (AddressBookDictionary.dictionary.containsKey(rem)) {
 			AddressBookDictionary.dictionary.remove(rem);
 			System.out.println("Address Book Deleted");
-		}
-		else
+		} else
 			System.out.println("No such directory exists!");
 	}
-}	
+}
