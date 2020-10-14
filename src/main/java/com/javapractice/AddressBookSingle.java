@@ -35,8 +35,9 @@ public class AddressBookSingle {
 			String phoneNumber = sc.nextLine();
 			System.out.println("Enter email ID:");
 			String email = sc.nextLine();
-			book.addressbook.put(index,
-					new AddressBookMain(firstName, lastName, address, city, state, zip, phoneNumber, email));
+			AddressBookMain contact = new AddressBookMain(firstName, lastName, address, city, state, zip, phoneNumber, email);
+			book.addressbook.put(index,contact);
+			FileOperations.addDetailsInBook(book, contact, index);
 			System.out.println("New contact added.");
 			book.addressbook.get(index).Display();
 		} else
@@ -130,10 +131,7 @@ public class AddressBookSingle {
 		String lastName = sc.nextLine();
 		String index = firstName + " " + lastName;
 		index = index.toUpperCase();
-		if (!book.addressbook.isEmpty() && book.addressbook.containsKey(index)) {
-			book.addressbook.get(index).Display();
-		} else
-			System.out.println("Contact does not exist!!!");
+		FileOperations.getContactDetails(book.name);
 	}
 
 	public static void displayAllContacts(AddressBookSingle book) {
@@ -176,8 +174,8 @@ public class AddressBookSingle {
 			System.out.println("Enter 1 to add a contact detail.");
 			System.out.println("Enter 2 to edit a contact detail.");
 			System.out.println("Enter 3 to remove a contact detail.");
-			System.out.println("Enter 4 to display a contact detail.");
-			System.out.println("Enter 5 to display all the contact details in the current active book.");
+			System.out.println("Enter 4 to display contact details.");
+			System.out.println("Enter 5 to display sorted contact details in the current active book.");
 			System.out.println("Enter 6 to return.");
 			System.out.println("Enter your choice:");
 

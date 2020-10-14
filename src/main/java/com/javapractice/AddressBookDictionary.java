@@ -1,11 +1,12 @@
 package com.javapractice;
 
+import java.io.IOException;
 import java.util.*;
 
 public class AddressBookDictionary {
 	public static HashMap<String, AddressBookSingle> dictionary = new HashMap<>();
 
-	public static void main(String args[]) {
+	public static void main(String args[])throws IOException {
 		while (true) {
 			System.out.println("1. Create and Add AddressBook");
 			System.out.println("2. Select AddressBook");

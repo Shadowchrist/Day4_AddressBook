@@ -1,5 +1,6 @@
 package com.javapractice;
 
+import java.io.IOException;
 import java.util.*;
 
 public class DictionaryOperations<search> {
@@ -52,28 +53,31 @@ public class DictionaryOperations<search> {
 		}
 	}
 
-	public static void createAddressBook() {
+	public static void createAddressBook() throws IOException {
 		System.out.println("Enter name of Address Book to be created: ");
 		@SuppressWarnings("resource")
 		String bookName = new Scanner(System.in).nextLine();
 		bookName = bookName.toUpperCase();
-		if (!checkAddressBook(bookName)) {
+		if (!FileOperations.checkIfBookExists(bookName)) {
 			HashMap<String, AddressBookMain> book = new HashMap<>();
 			AddressBookDictionary.dictionary.put(bookName, new AddressBookSingle(bookName, book));
+			FileOperations.createBook(bookName);
 			System.out.println("Address Book Created");
+			
 		} else
 			System.out.println("Address Book with that name already present!!!");
 	}
 
-	public static void selectAddressBook() {
+	public static void selectAddressBook() throws IOException {
 		System.out.println("Address Books present: \n");
-		displayAddressBooks();
+		FileOperations.displayAllBooks();
 		System.out.println("Enter name of Address Book to be selected: ");
 		@SuppressWarnings("resource")
+		
 		Scanner ob = new Scanner(System.in);
 		String current = ob.nextLine();
 		current = current.toUpperCase();
-		if (AddressBookDictionary.dictionary.containsKey(current)) {
+		if (FileOperations.checkIfBookExists(current)) {
 			AddressBookSingle activeBook = AddressBookDictionary.dictionary.get(current);
 			AddressBookSingle.bookOperations(activeBook);
 		} else {
@@ -99,7 +103,8 @@ public class DictionaryOperations<search> {
 		Scanner ob = new Scanner(System.in);
 		String rem = ob.nextLine();
 		rem = rem.toUpperCase();
-		if (AddressBookDictionary.dictionary.containsKey(rem)) {
+		if (AddressBookDictionary.dictionary.containsKey(rem) || FileOperations.checkIfBookExists(rem) ) {
+			FileOperations.deleteBook(rem);
 			AddressBookDictionary.dictionary.remove(rem);
 			System.out.println("Address Book Deleted");
 		} else
