@@ -1,4 +1,4 @@
-package com.javapractice;
+package Addressbook;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -123,18 +123,10 @@ public class AddressBookSingle {
 	}
 
 	public static void displayDetails(AddressBookSingle book) {
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter first name:");
-		String firstName = sc.nextLine();
-		System.out.println("Enter last name:");
-		String lastName = sc.nextLine();
-		String index = firstName + " " + lastName;
-		index = index.toUpperCase();
 		FileOperations.getContactDetails(book.name);
 	}
 
-	public static void displayAllContacts(AddressBookSingle book) {
+	public static void displayAllContacts(AddressBookSingle activebook) {
 		System.out.println("How do you want to sort? \n" + "1. By name \n" + "2. By zip \n" + "3. By city \n"
 				+ "4. By state \n" + "Enter your Choice: ");
 		@SuppressWarnings("resource")

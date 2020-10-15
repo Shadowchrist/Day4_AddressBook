@@ -1,4 +1,4 @@
-package com.javapractice;
+package Addressbook;
 
 import java.io.IOException;
 import java.util.*;
@@ -77,8 +77,11 @@ public class DictionaryOperations<search> {
 		Scanner ob = new Scanner(System.in);
 		String current = ob.nextLine();
 		current = current.toUpperCase();
-		if (FileOperations.checkIfBookExists(current)) {
-			AddressBookSingle activeBook = AddressBookDictionary.dictionary.get(current);
+		if (FileOperations.checkIfBookExists(current)) 
+		{
+			AddressBookSingle book = new AddressBookSingle(current,new HashMap<String,AddressBookMain>());
+			AddressBookSingle activeBook = FileOperations.mapFileToBook(book);
+			AddressBookDictionary.dictionary.put(current.toUpperCase(), activeBook);
 			AddressBookSingle.bookOperations(activeBook);
 		} else {
 			System.out.println("No such directory exists! Do you want to create one? (Yes/No) \n");
